@@ -120,13 +120,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FA6F81DA1D935F22007975FE /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Constants;
-			sourceTree = "<group>";
-		};
 		FA71996F1D94EC5A00FBC99B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,7 +165,6 @@
 		FAC36F3C1BE1756D007F2A20 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				FA6F81DA1D935F22007975FE /* Constants */,
 				FAC36F3D1BE1756D007F2A20 /* Controllers */,
 				FAC36F3F1BE1756D007F2A20 /* Models */,
 				FAC36F421BE1756D007F2A20 /* Views */,
