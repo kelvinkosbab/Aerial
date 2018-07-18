@@ -65,7 +65,7 @@ class AerialView: ScreenSaverView {
   }
   
   deinit {
-    debugLog("deinit AerialView")
+    Log.log("deinit AerialView")
     NotificationCenter.default.removeObserver(self)
     
     // set player item to nil if not preview player
@@ -102,7 +102,7 @@ class AerialView: ScreenSaverView {
     layer.needsDisplayOnBoundsChange = true
     layer.frame = self.bounds
     //        layer.backgroundColor = NSColor.greenColor().CGColor
-    debugLog("setting up player layer with frame: \(self.bounds) / \(self.frame)")
+    Log.log("setting up player layer with frame: \(self.bounds) / \(self.frame)")
     
     playerLayerBack = AVPlayerLayer(player: playerBack)
     if #available(OSX 10.10, *) {
@@ -207,11 +207,11 @@ class AerialView: ScreenSaverView {
   }
   
   @objc func playerItemDidReachEnd(_ aNotification: Notification) {
-    debugLog("played did reach end")
-    debugLog("notification: \(aNotification)")
+    Log.log("played did reach end")
+    Log.log("notification: \(aNotification)")
     //    playNextVideo()
     if let player = self.player {
-      debugLog("playing next video for player \(player)")
+      Log.log("playing next video for player \(player)")
     }
   }
   
@@ -259,7 +259,7 @@ class AerialView: ScreenSaverView {
     //      AerialView.previewPlayer = player
     //    }
     //
-    //    debugLog("Setting player for all player layers in \(AerialView.sharedViews)")
+    //    Log.log("Setting player for all player layers in \(AerialView.sharedViews)")
     //    for view in AerialView.sharedViews {
     //      view.playerLayer.player = player
     //    }
@@ -285,9 +285,9 @@ class AerialView: ScreenSaverView {
     
     //    player.replaceCurrentItem(with: item)
     if  !currentPlayerIsFrontPlayer {
-      debugLog("\n\n---------\nplaying front player\n")
+      Log.log("\n\n---------\nplaying front player\n")
       if let currentItem = self.player?.currentItem {
-        debugLog("\(currentItem)")
+        Log.log("\(currentItem)")
       }
       self.player = newPlayer
       self.playerLayer.player = newPlayer
@@ -311,7 +311,7 @@ class AerialView: ScreenSaverView {
       self.currentPlayerIsFrontPlayer = true
       
     } else {
-      debugLog("\n\n---------\nplaying back player\n")
+      Log.log("\n\n---------\nplaying back player\n")
       self.playerBack = newPlayer
       self.playerLayerBack.player = newPlayer
       self.playerBack?.replaceCurrentItem(with: item)
@@ -336,9 +336,9 @@ class AerialView: ScreenSaverView {
       
     }
     
-    debugLog("playing video: \(video.url)")
+    Log.log("playing video: \(video.url)")
     if let currentItem = currentItem {
-      debugLog("observing current item \(currentItem)")
+      Log.log("observing current item \(currentItem)")
     }
     
     notificationCenter.addObserver(self,

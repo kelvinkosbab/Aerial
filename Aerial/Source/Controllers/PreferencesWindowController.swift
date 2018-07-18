@@ -125,7 +125,7 @@ NSOutlineViewDelegate, VideoDownloadDelegate {
   // MARK: - Preferences
   
   @IBAction func cacheAerialsAsTheyPlayClick(_ button: NSButton!) {
-    debugLog("cache aerials as they play: \(button.state)")
+    Log.log("cache aerials as they play: \(button.state)")
     
     let onState = (button.state == NSControl.StateValue.on)
     preferences.cacheAerials = onState
@@ -205,7 +205,7 @@ NSOutlineViewDelegate, VideoDownloadDelegate {
     
     preferences.differentAerialsOnEachDisplay = onState
     
-    debugLog("set differentAerialsOnEachDisplay to \(onState)")
+    Log.log("set differentAerialsOnEachDisplay to \(onState)")
   }
   
   // MARK: - Link

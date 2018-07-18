@@ -34,7 +34,7 @@ class ManifestLoader {
       let inRotation = preferences.videoIsInRotation(videoID: video.id)
       
       if !inRotation {
-        debugLog("video is disabled: \(video)")
+        Log.log("video is disabled: \(video)")
         continue
       }
       
@@ -86,7 +86,7 @@ class ManifestLoader {
   
   func loadSavedManifest() {
     guard let savedJSON = preferences.manifest else {
-      debugLog("Couldn't find saved manifest")
+      Log.log("Couldn't find saved manifest")
       return
     }
     

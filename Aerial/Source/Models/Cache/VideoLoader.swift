@@ -65,7 +65,7 @@ class VideoLoader: NSObject, NSURLConnectionDataDelegate {
     loadedRange = NSRange(location: requestedRange.location, length: 0)
     
     connection.start()
-    //        debugLog("Starting request: \(request)")
+    //        Log.log("Starting request: \(request)")
   }
   
   deinit {
@@ -125,7 +125,7 @@ class VideoLoader: NSObject, NSURLConnectionDataDelegate {
         } else {
           dataRequest.respond(with: data)
         }
-        //                debugLog("Responding with data")
+        //                Log.log("Responding with data")
       }
         // check if we're at a point now where we can send content
       else if loadedLocation + data.count >= requestedRange.location {
@@ -150,7 +150,7 @@ class VideoLoader: NSObject, NSURLConnectionDataDelegate {
         
       }
       
-      //            debugLog("Received data with length: \(data.count)")
+      //            Log.log("Received data with length: \(data.count)")
       
       self.loadedRange.length += data.count
       
@@ -160,7 +160,7 @@ class VideoLoader: NSObject, NSURLConnectionDataDelegate {
   func connectionDidFinishLoading(_ connection: NSURLConnection) {
     
     queue.async { () -> Void in
-      debugLog("connectionDidFinishLoading")
+      Log.log("connectionDidFinishLoading")
       self.loadingRequest.finishLoading()
     }
   }
@@ -172,21 +172,21 @@ class VideoLoader: NSObject, NSURLConnectionDataDelegate {
     }
     
     guard let response = self.response else {
-      debugLog("No response")
+      Log.log("No response")
       return
     }
     
     guard let mimeType = response.mimeType else {
-      debugLog("no mimeType for \(response)")
+      Log.log("no mimeType for \(response)")
       return
     }
     
     guard let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mimeType as CFString, nil) else {
-      debugLog("couldn't create prefered identifier for tag \(mimeType)")
+      Log.log("couldn't create prefered identifier for tag \(mimeType)")
       return
     }
     
-    //        debugLog("Processsing contentInformationRequest")
+    //        Log.log("Processsing contentInformationRequest")
     
     let contentType: String = uti.takeRetainedValue() as String
     
@@ -194,7 +194,7 @@ class VideoLoader: NSObject, NSURLConnectionDataDelegate {
     contentInformationRequest.contentType = contentType
     contentInformationRequest.contentLength = response.expectedContentLength
     
-    //        debugLog("expected content length: \(response.expectedContentLength)")
+    //        Log.log("expected content length: \(response.expectedContentLength)")
   }
   
   // MARK: - Range
@@ -215,14 +215,14 @@ class VideoLoader: NSObject, NSURLConnectionDataDelegate {
     let httpResponse = response as! HTTPURLResponse
     
     guard let contentRange = httpResponse.allHeaderFields["Content-Range"] as? NSString else {
-      debugLog("Weird, no byte response: \(response)")
+      Log.log("Weird, no byte response: \(response)")
       return nil
     }
     
     guard let match = regex.firstMatch(in: contentRange as String,
                                        options: NSRegularExpression.MatchingOptions.anchored,
                                        range: NSRange(location:0, length: contentRange.length)) else {
-                                        debugLog("Weird, couldn't make a regex match for byte offset: \(contentRange)")
+                                        Log.log("Weird, couldn't make a regex match for byte offset: \(contentRange)")
                                         return nil
     }
     let offsetMatchRange = match.range(at: 1)
@@ -230,7 +230,7 @@ class VideoLoader: NSObject, NSURLConnectionDataDelegate {
     
     let offset = offsetString.longLongValue
     
-    //        debugLog("content range: \(contentRange), start offset: \(offset)")
+    //        Log.log("content range: \(contentRange), start offset: \(offset)")
     
     return Int(offset)
   }

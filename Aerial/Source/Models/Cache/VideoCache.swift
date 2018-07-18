@@ -117,10 +117,10 @@ class VideoCache {
     
     consolidateLoadedRanges()
     
-    //        debugLog("loaded ranges: \(loadedRanges)")
+    //        Log.log("loaded ranges: \(loadedRanges)")
     if loadedRanges.count == 1 {
       let range = loadedRanges[0]
-      //            debugLog("checking if range \(range) matches length \(mutableVideoData.length)")
+      //            Log.log("checking if range \(range) matches length \(mutableVideoData.length)")
       if range.location == 0 && range.length == mutableVideoData.length {
         // done loading, save
         saveCachedVideo()
@@ -141,7 +141,7 @@ class VideoCache {
     let preferences = Preferences.sharedInstance
     
     guard preferences.cacheAerials else {
-      debugLog("Cache disabled, not saving video")
+      Log.log("Cache disabled, not saving video")
       return
     }
     
@@ -189,7 +189,7 @@ class VideoCache {
     
     self.videoData = videoData
     loading = false
-    //        debugLog("cached video file with length: \(self.videoData.length)")
+    //        Log.log("cached video file with length: \(self.videoData.length)")
   }
   
   // MARK: - Fulfilling cache
@@ -287,7 +287,7 @@ class VideoCache {
             continue
           } else {
             // skip adding this to the array, previous range is already bigger
-            //                        debugLog("skipping add of \(range), previous: \(previousRange)")
+            //                        Log.log("skipping add of \(range), previous: \(previousRange)")
             continue
           }
         }
