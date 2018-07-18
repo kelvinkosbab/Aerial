@@ -45,9 +45,11 @@ class City {
 class PreferencesWindowController: NSWindowController, NSOutlineViewDataSource,
 NSOutlineViewDelegate, VideoDownloadDelegate {
   
+  @IBOutlet var nightTimeLabel: NSTextField!
   @IBOutlet var outlineView: NSOutlineView!
   @IBOutlet var playerView: AVPlayerView!
   @IBOutlet var differentAerialCheckbox: NSButton!
+  @IBOutlet var basedOnTimeCheckbox: NSButton!
   @IBOutlet var projectPageLink: NSButton!
   @IBOutlet var cacheLocation: NSPathControl!
   @IBOutlet var cacheAerialsAsTheyPlayCheckbox: NSButton!
@@ -92,6 +94,10 @@ NSOutlineViewDelegate, VideoDownloadDelegate {
     
     if preferences.differentAerialsOnEachDisplay {
       differentAerialCheckbox.state = NSControl.StateValue.on
+    }
+    
+    if preferences.basedOnTime {
+      basedOnTimeCheckbox.state = .on
     }
     
     if !preferences.cacheAerials {
@@ -206,6 +212,15 @@ NSOutlineViewDelegate, VideoDownloadDelegate {
     preferences.differentAerialsOnEachDisplay = onState
     
     Log.log("set differentAerialsOnEachDisplay to \(onState)")
+  }
+  
+  @IBAction func basedOnTimeCheckClick(_ button: NSButton?) {
+    let state = basedOnTimeCheckbox.state
+    let onState = (state == .on)
+    
+    preferences.basedOnTime = onState
+    
+    Log.log("set basedOnTime to \(onState)")
   }
   
   // MARK: - Link

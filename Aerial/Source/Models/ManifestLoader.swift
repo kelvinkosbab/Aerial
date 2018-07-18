@@ -28,6 +28,17 @@ class ManifestLoader {
     }
   }
   
+  func timeOfDay() -> String {
+    let date = NSDate()
+    let calendar = NSCalendar.current
+    let hour = calendar.component(.hour, from: date as Date)
+    if hour>=18 || hour<6{
+      return "night";
+    } else {
+      return "day";
+    }
+  }
+  
   func randomVideo() -> AerialVideo? {
     let shuffled = loadedManifest.shuffled()
     for video in shuffled {
@@ -38,11 +49,19 @@ class ManifestLoader {
         continue
       }
       
-      // check if we're in offline mode
+      // Check if we're in offline mode
       if offlineMode == true {
         if video.isAvailableOffline == false {
           continue
         }
+      }
+      
+      // Check if based on time
+      if preferences.basedOnTime {
+        if video.timeOfDay == timeOfDay() {
+          return video
+        }
+        continue
       }
       
       return video
