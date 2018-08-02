@@ -89,7 +89,7 @@ NSOutlineViewDelegate, VideoDownloadDelegate {
     playerView.player = player
     playerView.controlsStyle = .none
     if #available(OSX 10.10, *) {
-      playerView.videoGravity = AVLayerVideoGravity.resizeAspectFill.rawValue
+      playerView.videoGravity = convertToAVLayerVideoGravity(AVLayerVideoGravity.resizeAspectFill.rawValue)
     }
     
     if preferences.differentAerialsOnEachDisplay {
@@ -122,7 +122,7 @@ NSOutlineViewDelegate, VideoDownloadDelegate {
     let link = projectPageLink.attributedTitle
     let coloredLink = NSMutableAttributedString(attributedString: link)
     let fullRange = NSRange(location: 0, length: coloredLink.length)
-    coloredLink.addAttribute(NSAttributedStringKey.foregroundColor,
+    coloredLink.addAttribute(NSAttributedString.Key.foregroundColor,
                              value: color,
                              range: fullRange)
     projectPageLink.attributedTitle = coloredLink
@@ -552,4 +552,9 @@ NSOutlineViewDelegate, VideoDownloadDelegate {
     //     NSLog("received bytes: \(receivedBytes), progress: \(progress)")
   }
   
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToAVLayerVideoGravity(_ input: String) -> AVLayerVideoGravity {
+	return AVLayerVideoGravity(rawValue: input)
 }

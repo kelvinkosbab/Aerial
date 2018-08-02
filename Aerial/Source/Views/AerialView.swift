@@ -223,7 +223,7 @@ class AerialView: ScreenSaverView {
     inImation.keyTimes = [0,1]
     inImation.values = [0,1]
     inImation.duration = 3
-    inImation.fillMode = kCAFillModeBoth
+    inImation.fillMode = CAMediaTimingFillMode.both
     inImation.isRemovedOnCompletion = false
     inImation.beginTime = CACurrentMediaTime()+0.5
     layerToFade.add(inImation, forKey: "inOpacity")
@@ -235,7 +235,7 @@ class AerialView: ScreenSaverView {
     outImation.keyTimes = [0,1]
     outImation.values = [1,0]
     outImation.duration = 5
-    outImation.fillMode = kCAFillModeBoth
+    outImation.fillMode = CAMediaTimingFillMode.both
     outImation.isRemovedOnCompletion = false
     // offset fade out at least by duration of fade in
     outImation.beginTime = CACurrentMediaTime()+4.0
@@ -304,8 +304,8 @@ class AerialView: ScreenSaverView {
       // fade in front player
       fadeLayerIn(layerToFade: self.playerLayer)
       
-      self.player?.actionAtItemEnd = AVPlayerActionAtItemEnd.none
-      self.player?.addBoundaryTimeObserver(forTimes: [NSValue(time:kCMTimeZero+CMTimeMakeWithSeconds(fadeTime,1))], queue: DispatchQueue.main) {
+      self.player?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none
+      self.player?.addBoundaryTimeObserver(forTimes: [NSValue(time:CMTime.zero+CMTimeMakeWithSeconds(fadeTime,preferredTimescale: 1))], queue: DispatchQueue.main) {
         self.playNextVideo()
       }
       self.currentPlayerIsFrontPlayer = true
@@ -328,8 +328,8 @@ class AerialView: ScreenSaverView {
       //      fadeLayerIn(layerToFade: self.playerLayerBack)
       fadeLayerOut(layerToFade: self.playerLayer)
       
-      self.playerBack?.actionAtItemEnd = AVPlayerActionAtItemEnd.none
-      self.playerBack?.addBoundaryTimeObserver(forTimes: [NSValue(time:kCMTimeZero+CMTimeMakeWithSeconds(fadeTime,1))], queue: DispatchQueue.main) {
+      self.playerBack?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none
+      self.playerBack?.addBoundaryTimeObserver(forTimes: [NSValue(time:CMTime.zero+CMTimeMakeWithSeconds(fadeTime,preferredTimescale: 1))], queue: DispatchQueue.main) {
         self.playNextVideo()
       }
       self.currentPlayerIsFrontPlayer = false;
@@ -370,7 +370,7 @@ class AerialView: ScreenSaverView {
       return controller.window
     }
     
-    let controller = PreferencesWindowController(windowNibName: NSNib.Name("PreferencesWindow"))
+    let controller = PreferencesWindowController(windowNibName: "PreferencesWindow")
     preferencesController = controller
     return controller.window
   }

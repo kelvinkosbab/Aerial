@@ -42,7 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   private func objectsFromNib(loadNibNamed nibName: String) -> [AnyObject] {
     let bundle = Bundle.main
     var topLevelObjects:NSArray? = NSArray()
-    bundle.loadNibNamed(NSNib.Name(nibName),
+    bundle.loadNibNamed(nibName,
                         owner: preferencesWindowController,
                         topLevelObjects: &topLevelObjects)
     return topLevelObjects! as [AnyObject]
